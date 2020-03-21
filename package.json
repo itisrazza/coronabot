@@ -1,0 +1,20 @@
+{
+    "name": "@thegreatrazz/coronication",
+    "version": "0.1.1",
+    "author": {
+        "name": "Raresh Nistor",
+        "email": "me@thegreatrazz.nz",
+        "url": "https://thegreatrazz.nz/"
+    },
+    "dependencies": {
+        "discord.js": "^12.0.2",
+        "emailjs-imap-client": "^3.1.0",
+        "imap": "^0.8.19",
+        "mailparser": "^2.7.7"
+    },
+    "main": "bin/coronication.js",
+    "bin": "bin/coronication.js",
+    "scripts": {
+        "start": "node ."
+    }
+}
