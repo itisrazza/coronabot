@@ -36,12 +36,12 @@ client.on('ready', () => {
     bot.announcements = new Announcements(config, client, bot)
 })
 
+// for future messages
 client.on('message', msg => {
-    if (msg.content === 'ping') {
-        msg.reply('pong')
-    }
+    // 
 })
 
+// pinning, possible voting support
 client.on('messageReactionAdd', async react => {
     // if we have 3 pins, pin it to the top
     // (code lifted from https://github.com/alexsurelee/VicBot/blob/026b9ff1ca85f72f33da6947c65f66d58a663a1e/index.js#L378)
@@ -52,6 +52,14 @@ client.on('messageReactionAdd', async react => {
     }
 })
 
+// add people to lads on join
+client.on('guildMemberAdd', async member => {
+    // add the new members to the role
+    let memberRole = await member.guild.roles.fetch(config.discord.memberRole)
+    await member.addRole(memberRole)
+})
+
+// login
 client
     .login(apiKey)
     .then(val => {
