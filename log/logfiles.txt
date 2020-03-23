@@ -1,0 +1,4 @@
+
+Log files will be written here. If you're on a Linux/UNIX machine,
+you should map this to either /var/logs or /tmp to have them deleted on 
+restart.

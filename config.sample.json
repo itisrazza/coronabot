@@ -1,0 +1,17 @@
+{
+    "discord": {
+        "token": "### TOKEN HERE ###",
+        "emailChannel": "### EMAIL CHANNEL ID ###"
+    },
+    "email": {
+        "host": "### EMAIL SERVER ###",
+        "port": 143,
+        "options": {
+            "logLevel": "info",
+            "auth": {
+                "user": "### EMAIL USER ###",
+                "pass": "### EMAIL PASS ###"
+            }
+        }
+    }
+}

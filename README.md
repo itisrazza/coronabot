@@ -1,14 +1,15 @@
-# CoronaClub Discord Bot (aka Coronification)
+# CoronaBot
 
-Here lies the source code for the CoronaClub Discord bot.
+CoronaBot is the bot doing a few things on a Discord server a friend set up to provide useful information (and comedy relief) during the COVID-19 pandemic of 2020.
 
-This is a haphazardly cobbled together collection of code to provide some useful information while studying during the 2019-2020 Wuhan Coronavirus (COVID-19) outbreak.
+At the moment, it does the following things:
 
-## Background
+* Forward emails send to student mailing lists to a Discord text channel
+* Pin items to channels but reacting with 📌 (with code lifted from [here][1])
 
-## Functionality
+You can suggest features by leaving an issue, or getting in touch with me via that certain Discord server I mentioned earlier.
 
-## Up'n Go
+## Gettin' It Going
 
 To get this going, `nodejs` and `npm` need to be installed. After that, the usual:
 
@@ -16,11 +17,14 @@ To get this going, `nodejs` and `npm` need to be installed. After that, the usua
 $ git clone git@github.com:thegreatrazz/coronication.git
 $ cd coronication
 $ npm install
-$ npm start /path/to/api-key.txt
+$ npm start /path/to/config.json
 ```
 
-The Discord bot token needs to be saved to a text file and passed to `npm start`.
+The Discord bot token and other info needs to be saved to a text file and passed to `npm start`.
 
 ## LICENSE
 
-This project uses the [FreeBSD License](LICENSE). But the repository is private for a reason.
+This project uses the [FreeBSD License](LICENSE). Feel free to use the source for whatever you want.
+
+
+[1]: https://github.com/alexsurelee/VicBot/blob/026b9ff1ca85f72f33da6947c65f66d58a663a1e/index.js#L378

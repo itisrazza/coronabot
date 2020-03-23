@@ -1,5 +1,14 @@
 #!/usr/bin/env node --unhandled-rejections=strict
 
+/*!
+ * CoronaBot -- Program entry point.
+ * 
+ * This file serves as the main entry point in the bot's program.
+ * Everything else spins off from here.
+ * 
+ *                  -- Raresh
+ */
+
 const fs = require('fs')
 
 const Discord = require('discord.js')
@@ -8,22 +17,22 @@ const client = new Discord.Client()
 const config = require('../lib/config')
 const apiKey = config.discord.token
 
-/**
- * Bot functionality
- * 
- * Require the constructor and replace it with the object it produces
- */
+// Bot Functionality
+
 const bot = {
-    announcements: undefined
+    announcements: undefined,
+    log: require('../lib/log')
 }
 
 const Announcements = require('../lib/announcements')
 
+// Discord library events
 
 // connect the bot up to the 
 client.on('ready', () => {
     // we're online
-    console.log(`Logged in as ${client.user.tag}`)
+    
+    bot.log.log('DISCORD', `Logged in as ${client.user.tag}`)
     client.user.setStatus('online')
     client.user.setPresence({
         activity: {
@@ -54,18 +63,17 @@ client.on('messageReactionAdd', async react => {
 
 // add people to lads on join
 client.on('guildMemberAdd', async member => {
-    // add the new members to the role
-    let memberRole = await member.guild.roles.fetch(config.discord.memberRole)
-    await member.addRole(memberRole)
+    // auto add on join didn't work
+    // will keep this event handler for other things we might do later
 })
 
 // login
 client
     .login(apiKey)
     .then(val => {
-        console.log("Logged in successfully!")
+        bot.log.log("DISCORD", "Logged in successfully!")
     })
     .catch(e => {
-        console.error("Failed to log in: " + e)
+        bot.log.error("DISCORD", "Failed to log in: " + e)
         process.exit(1)
     })
