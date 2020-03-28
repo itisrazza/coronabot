@@ -21,10 +21,12 @@ const apiKey = config.discord.token
 
 const bot = {
     announcements: undefined,
-    log: require('../lib/log')
+    log: require('../lib/log'),
+    motd: undefined
 }
 
 const Announcements = require('../lib/announcements')
+const Motd = require('../lib/motd')
 
 // Discord library events
 
@@ -36,13 +38,14 @@ client.on('ready', () => {
     client.user.setStatus('online')
     client.user.setPresence({
         activity: {
-            name: `the paint dry`,
-            type: 'WATCHING'
+            name: `** Coronabot starting up... **`,
+            type: 'PLAYING'
         }
     })
 
     // construct the modules
     bot.announcements = new Announcements(config, client, bot)
+    bot.motd = new Motd(config, client, bot)
 })
 
 // for future messages

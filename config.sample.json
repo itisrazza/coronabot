@@ -3,6 +3,9 @@
         "token": "### TOKEN HERE ###",
         "emailChannel": "### EMAIL CHANNEL ID ###"
     },
+    "motd": {
+        "interval": 1000
+    },
     "email": {
         "host": "### EMAIL SERVER ###",
         "port": 143,
