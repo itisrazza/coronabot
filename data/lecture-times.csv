@@ -1,0 +1,8 @@
+Wizard,Time Zone Calibration,38 9 * * 5,NZST (or should at least be)
+NWEN241,Josh's Tutorial,50 13 * * 5,NWEN241 Zoom
+SWEN221,Lab,00 10 * * 5,SWEN221 Zoom
+COMP261,Tuesday Lecture,50 11 * * 2,COMP261 Zoom
+COMP261,Thursday Lecture,50 11 * * 4,COMP261 Zoom
+COMP261,Friday Lecture,50 11 * * 5,COMP261 Zoom
+INFO151,Lecture,00 13 * * 3,INFO151 Zoom
+INFO151,Workshop,00 14 * * 3,INFO151 Zoom

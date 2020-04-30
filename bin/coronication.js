@@ -19,22 +19,32 @@ const apiKey = config.discord.token
 
 // Bot Functionality
 
+const Logger = require('../lib/log')
+
 const bot = {
+    devMode: process.argv.includes("devmode"),
+    log: new Logger(),
     announcements: undefined,
-    log: require('../lib/log'),
-    motd: undefined
+    motd: undefined,
+    classTimes: undefined
 }
 
 const Announcements = require('../lib/announcements')
 const Motd = require('../lib/motd')
+const ClassTimes = require('../lib/class-times')
 
 // Discord library events
+
+if (bot.devMode) {
+    console.log("Running in developer mode.")
+}
 
 // connect the bot up to the 
 client.on('ready', () => {
     // we're online
     
     bot.log.log('DISCORD', `Logged in as ${client.user.tag}`)
+    bot.log.bot = bot
     client.user.setStatus('online')
     client.user.setPresence({
         activity: {
@@ -44,8 +54,10 @@ client.on('ready', () => {
     })
 
     // construct the modules
+    bot.log.setClient(client)
     bot.announcements = new Announcements(config, client, bot)
     bot.motd = new Motd(config, client, bot)
+    bot.classTimes = new ClassTimes(config, client, bot)
 })
 
 // for future messages

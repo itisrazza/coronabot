@@ -14,6 +14,10 @@
             "program": "${workspaceFolder}/bin/coronication.js",
             "runtimeArgs": [
                 "--unhandled-rejections=strict"
+            ],
+            "args": [
+                "config.json",
+                "devmode"
             ]
         }
     ]
