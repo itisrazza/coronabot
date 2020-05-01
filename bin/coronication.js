@@ -24,14 +24,24 @@ const Logger = require('../lib/log')
 const bot = {
     devMode: process.argv.includes("devmode"),
     log: new Logger(),
+
+    /** @type {Announcements} */
     announcements: undefined,
+    
+    /** @type {Motd} */
     motd: undefined,
-    classTimes: undefined
+
+    /** @type {ClassTimes} */
+    classTimes: undefined,
+
+    /** @type {CommandProcessor} */
+    comProc: undefined
 }
 
 const Announcements = require('../lib/announcements')
 const Motd = require('../lib/motd')
 const ClassTimes = require('../lib/class-times')
+const CommandProcessor = require('../lib/comproc')
 
 // Discord library events
 
@@ -54,15 +64,23 @@ client.on('ready', () => {
     })
 
     // construct the modules
-    bot.log.setClient(client)
+    if (!bot.devMode) bot.log.setClient(client)
     bot.announcements = new Announcements(config, client, bot)
     bot.motd = new Motd(config, client, bot)
     bot.classTimes = new ClassTimes(config, client, bot)
+    bot.comProc = new CommandProcessor(config, client, bot)
 })
 
 // for future messages
-client.on('message', msg => {
-    // 
+client.on('message', async msg => {
+    if (typeof bot.comProc === 'undefined') {
+        msg.reply('Coronabot is taking commands yet. Try again later.')
+        return
+    }
+
+    if (msg.channel.id === config.discord.botChannel) {
+        bot.comProc.exec(msg)
+    }
 })
 
 // pinning, possible voting support
