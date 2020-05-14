@@ -35,13 +35,17 @@ const bot = {
     classTimes: undefined,
 
     /** @type {CommandProcessor} */
-    comProc: undefined
+    comProc: undefined,
+
+    /** @type {SecretChat} */
+    secretChat: undefined
 }
 
 const Announcements = require('../lib/announcements')
 const Motd = require('../lib/motd')
 const ClassTimes = require('../lib/class-times')
 const CommandProcessor = require('../lib/comproc')
+const SecretChat = require('../lib/secret-chat')
 
 // Discord library events
 
