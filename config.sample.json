@@ -1,20 +1,57 @@
 {
     "discord": {
-        "token": "### TOKEN HERE ###",
-        "emailChannel": "### EMAIL CHANNEL ID ###"
+        "token": "## DISCORD TOKEN ##",
+        "announceChannel": "## CHANNEL ID ##",
+        "emailChannel": "## CHANNEL ID ##",
+        "botChannel": "## CHANNEL ID ##"
     },
     "motd": {
-        "interval": 1000
+        "interval": 1800000
+    },
+    "imap": {
+        "user": "## IMAP USERNAME ##",
+        "password": "## IMAP PASSWORD ##",
+        "host": "## IMAP SERVER ##",
+        "port": 993,
+        "tls": true
     },
     "email": {
-        "host": "### EMAIL SERVER ###",
+        "host": "## IMAP SERVER ##",
         "port": 143,
         "options": {
             "logLevel": "info",
             "auth": {
-                "user": "### EMAIL USER ###",
-                "pass": "### EMAIL PASS ###"
+                "user": "## IMAP USERNAME ##",
+                "pass": "## IMAP PASSWORD ##"
             }
         }
+    },
+    "classTimes": {
+        "channels": {
+            "deadlines": "## CHANNEL ID ##",
+            "lectureTimes": "## CHANNEL ID ##"
+        },
+        "courses": {
+            "COMP261": { 
+                "role": "## ROLE ID ##"
+            },
+            "SWEN221": {
+                "role": "## ROLE ID ##"
+            },
+            "NWEN241": {
+                "role": "## ROLE ID ##"
+            },
+            "INFO151": {
+                "role": "## ROLE ID ##"
+            },
+            "Wizard": {
+                "role": "## ROLE ID ##"
+            }
+        }
+    },
+    "birthday": {
+        "file": "## BIRTHDAY.CSV FILE PATH ##",
+        "refresh": 1800000,
+        "channel": "## CHANNEL ID ##"
     }
 }

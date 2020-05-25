@@ -21,6 +21,7 @@
         "stop": "node bin/covid19-stop.js"
     },
     "devDependencies": {
-        "commander": "^5.1.0"
+        "commander": "^5.1.0",
+        "eslint": "^7.1.0"
     }
 }

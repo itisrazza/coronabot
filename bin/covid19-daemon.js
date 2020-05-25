@@ -8,4 +8,4 @@ module.exports = require('daemonize2').setup({
     name: 'coronication',
     pidfile: '/tmp/coronication.pid',
     group: 'www-data'
-})
+});
