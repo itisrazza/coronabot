@@ -10,6 +10,10 @@
         }
     },
     "rules": {
-        "semi": "error"
+        "semi": "error",
+        "indent": "warn",
+        "brace-style": [ "warn", "1tbs", { "allowSingleLine": true }],
+        "quotes": [ "warn", "double" ],
+        "eol-last": "error"
     }
 }

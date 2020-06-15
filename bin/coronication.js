@@ -9,17 +9,17 @@
  *                  -- Raresh
  */
 
-const fs = require('fs');
+const fs = require("fs");
 
-const Discord = require('discord.js');
+const Discord = require("discord.js");
 const client = new Discord.Client();
 
-const config = require('../lib/config');
+const config = require("../lib/config");
 const apiKey = config.discord.token;
 
 // Bot Functionality
 
-const Logger = require('../lib/log');
+const Logger = require("../lib/log");
 
 const bot = {
     devMode: process.argv.includes("devmode"),
@@ -38,14 +38,17 @@ const bot = {
     comProc: undefined,
 
     /** @type {Birthdays} */
-    birthdays: undefined
+    birthdays: undefined,
+
+    /** @type {Dashboard} */
+    dashboard: Dashboard
 };
 
-const Announcements = require('../lib/announcements');
-const Motd = require('../lib/motd');
-const ClassTimes = require('../lib/class-times');
-const CommandProcessor = require('../lib/comproc');
-const Birthdays = require('../lib/birthdays');
+const Announcements = require("../lib/announcements");
+const Motd = require("../lib/motd");
+const ClassTimes = require("../lib/class-times");
+const CommandProcessor = require("../lib/comproc");
+const Birthdays = require("../lib/birthdays");
 
 // Discord library events
 
@@ -54,16 +57,16 @@ if (bot.devMode) {
 }
 
 // connect the bot up to the 
-client.on('ready', () => {
+client.on("ready", () => {
     // we're online
     
-    bot.log.log('DISCORD', `Logged in as ${client.user.tag}`);
+    bot.log.log("DISCORD", `Logged in as ${client.user.tag}`);
     bot.log.bot = bot;
-    client.user.setStatus('online');
+    client.user.setStatus("online");
     client.user.setPresence({
         activity: {
-            name: `** Coronabot starting up... **`,
-            type: 'PLAYING'
+            name: "** Coronabot starting up... **",
+            type: "PLAYING"
         }
     });
 
@@ -74,12 +77,13 @@ client.on('ready', () => {
     bot.classTimes = new ClassTimes(config, client, bot);
     bot.comProc = new CommandProcessor(config, client, bot);
     bot.birthdays = new Birthdays(config, client, bot);
+    bot.dashboard = new Dashboard(config, client, bot);
 });
 
 // for future messages
-client.on('message', async msg => {
-    if (typeof bot.comProc === 'undefined') {
-        msg.reply('Coronabot is taking commands yet. Try again later.');
+client.on("message", async msg => {
+    if (typeof bot.comProc === "undefined") {
+        msg.reply("Coronabot is taking commands yet. Try again later.");
         return;
     }
 
@@ -89,10 +93,10 @@ client.on('message', async msg => {
 });
 
 // pinning, possible voting support
-client.on('messageReactionAdd', async react => {
+client.on("messageReactionAdd", async react => {
     // if we have 3 pins, pin it to the top
     // (code lifted from https://github.com/alexsurelee/VicBot/blob/026b9ff1ca85f72f33da6947c65f66d58a663a1e/index.js#L378)
-    if (react.emoji.name === '📌') {
+    if (react.emoji.name === "📌") {
         if (react.count >= 1 && !react.message.pinned) {
             await react.message.pin();
         }
@@ -100,7 +104,7 @@ client.on('messageReactionAdd', async react => {
 });
 
 // add people to lads on join
-client.on('guildMemberAdd', async member => {
+client.on("guildMemberAdd", async member => {
     // auto add on join didn't work
     // will keep this event handler for other things we might do later
 });

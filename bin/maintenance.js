@@ -1,19 +1,19 @@
 
-const Discord = require('discord.js');
+const Discord = require("discord.js");
 const client = new Discord.Client();
 
-const config = require('../lib/config');
+const config = require("../lib/config");
 const apiKey = config.discord.token;
 
-client.on('ready', () => {
+client.on("ready", () => {
     // we're online
     
     console.log(`Logged in as ${client.user.tag}`);
-    client.user.setStatus('away');
+    client.user.setStatus("away");
     client.user.setPresence({
         activity: {
-            name: `** MAINTENANCE MODE -- Coronabot is unavailable. Check again later. **`,
-            type: 'PLAYING'
+            name: "** MAINTENANCE MODE -- Coronabot is unavailable. Check again later. **",
+            type: "PLAYING"
         }
     });
 });
