@@ -41,7 +41,7 @@ const bot = {
     birthdays: undefined,
 
     /** @type {Dashboard} */
-    dashboard: Dashboard
+    dashboard: undefined
 };
 
 const Announcements = require("../lib/announcements");
@@ -49,6 +49,7 @@ const Motd = require("../lib/motd");
 const ClassTimes = require("../lib/class-times");
 const CommandProcessor = require("../lib/comproc");
 const Birthdays = require("../lib/birthdays");
+const Dashboard = require("../lib/dashboard");
 
 // Discord library events
 
@@ -72,7 +73,7 @@ client.on("ready", () => {
 
     // construct the modules
     if (!bot.devMode) bot.log.setClient(client);
-    //bot.announcements = new Announcements(config, client, bot);
+    // bot.announcements = new Announcements(config, client, bot);
     bot.motd = new Motd(config, client, bot);
     bot.classTimes = new ClassTimes(config, client, bot);
     bot.comProc = new CommandProcessor(config, client, bot);
