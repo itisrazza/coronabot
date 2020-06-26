@@ -1,14 +1,1 @@
 Wizard,Time Zone Calibration,0 12 * * 5,NZST (or should at least be)
-NWEN241,Josh's Tutorial,50 13 * * 5,NWEN241 Zoom (<https://vuw.zoom.us/my/nwen241>)
-NWEN241,Josh's Tutorial (in 1 hour),00 13 * * 5,NWEN241 Zoom
-SWEN221,Lab,50 9 * * 5,SWEN221 Zoom (<https://vuw.zoom.us/my/swen221>)
-SWEN221,Lab (in 1 hour),00 9 * * 5,SWEN221 Zoom
-COMP261,Tuesday Lecture,50 11 * * 2,COMP261 Zoom (<https://vuw.zoom.us/my/comp261>)
-COMP261,Tuesday Lecture (in 1 hour),00 11 * * 2,COMP261 Zoom
-COMP261,Thursday Lecture,50 11 * * 4,COMP261 Zoom (<https://vuw.zoom.us/my/comp261>)
-COMP261,Thursday Lecture (in 1 hour),00 11 * * 4,COMP261 Zoom
-COMP261,Friday Lecture,50 11 * * 5,COMP261 Zoom (<https://vuw.zoom.us/my/comp261>)
-COMP261,Friday Lecture (in 1 hour),00 11 * * 5,COMP261 Zoom
-INFO151,Lecture,00 13 * * 3,INFO151 Zoom (<https://vuw.zoom.us/my/info151>)
-INFO151,Lecture (in 1 hour),00 12 * * 3,INFO151 Zoom
-INFO151,Workshop,00 14 * * 3,INFO151 Zoom (<https://vuw.zoom.us/my/info151>)

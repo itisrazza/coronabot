@@ -1,6 +1,6 @@
 {
     "name": "@thegreatrazz/coronication",
-    "version": "1.0.0-alpha",
+    "version": "1.0.0-alpha2",
     "author": {
         "name": "Raresh Nistor",
         "email": "me@thegreatrazz.nz",
@@ -22,6 +22,8 @@
     },
     "devDependencies": {
         "commander": "^5.1.0",
-        "eslint": "^7.1.0"
+        "eslint": "^7.1.0",
+        "prettier": "^2.0.5",
+        "prettier-eslint": "^11.0.0"
     }
 }

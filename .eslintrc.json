@@ -11,9 +11,14 @@
     },
     "rules": {
         "semi": "error",
-        "indent": "warn",
-        "brace-style": [ "warn", "1tbs", { "allowSingleLine": true }],
+        "indent": ["warn", 4, {
+
+        }],
+        "brace-style": [ "warn", "1tbs", { 
+            "allowSingleLine": true 
+        }],
         "quotes": [ "warn", "double" ],
-        "eol-last": "error"
+        "eol-last": "error",
+        "func-call-spacing": ["error", "never"]
     }
 }
