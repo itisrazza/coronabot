@@ -2,3 +2,4 @@ node_modules
 config.json
 log/
 data/real_birthdays.csv
+.DS_Store

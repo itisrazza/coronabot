@@ -1,4 +1,5 @@
 {
+    "parser": "prettier-eslint",
     "env": {
         "node": true
     },

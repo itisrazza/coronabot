@@ -31,9 +31,6 @@ const bot = {
     /** @type {Motd} */
     motd: undefined,
 
-    /** @type {ClassTimes} */
-    classTimes: undefined,
-
     /** @type {CommandProcessor} */
     comProc: undefined,
 
@@ -41,12 +38,15 @@ const bot = {
     birthdays: undefined,
 
     /** @type {Dashboard} */
-    dashboard: undefined
+    dashboard: undefined,
+
+    /** @type {Courses} */
+    courses: undefined
 };
 
 const Announcements = require("../lib/announcements");
 const Motd = require("../lib/motd");
-const ClassTimes = require("../lib/class-times");
+const Courses = require("../lib/courses");
 const CommandProcessor = require("../lib/comproc");
 const Birthdays = require("../lib/birthdays");
 const Dashboard = require("../lib/dashboard");
@@ -75,10 +75,10 @@ client.on("ready", () => {
     if (!bot.devMode) bot.log.setClient(client);
     // bot.announcements = new Announcements(config, client, bot);
     bot.motd = new Motd(config, client, bot);
-    bot.classTimes = new ClassTimes(config, client, bot);
     bot.comProc = new CommandProcessor(config, client, bot);
-    bot.birthdays = new Birthdays(config, client, bot);
+    // bot.birthdays = new Birthdays(config, client, bot);
     bot.dashboard = new Dashboard(config, client, bot);
+    bot.courses = new Courses(config, client, bot);
 });
 
 // for future messages
@@ -88,26 +88,9 @@ client.on("message", async msg => {
         return;
     }
 
-    if (msg.channel.id === config.discord.botChannel) {
+    if (msg.channel.id === config.comproc.channel) {
         bot.comProc.exec(msg);
     }
-});
-
-// pinning, possible voting support
-client.on("messageReactionAdd", async react => {
-    // if we have 3 pins, pin it to the top
-    // (code lifted from https://github.com/alexsurelee/VicBot/blob/026b9ff1ca85f72f33da6947c65f66d58a663a1e/index.js#L378)
-    if (react.emoji.name === "📌") {
-        if (react.count >= 1 && !react.message.pinned) {
-            await react.message.pin();
-        }
-    }
-});
-
-// add people to lads on join
-client.on("guildMemberAdd", async member => {
-    // auto add on join didn't work
-    // will keep this event handler for other things we might do later
 });
 
 // login
