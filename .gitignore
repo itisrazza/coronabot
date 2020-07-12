@@ -1,5 +1,5 @@
 node_modules
 config.json
 log/
-data/real_birthdays.csv
+data/
 .DS_Store

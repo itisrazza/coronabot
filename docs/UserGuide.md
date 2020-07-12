@@ -1,277 +1,158 @@
 ---
-title: Coronabot
-subtitle: User Guide
-author: Raresh Nistor
-charset: utf8
-fontfamily: domitian
-numbersections: 1
-toc: true
+title: Coronabot Operator Manual
+subtitle: An introduction to working with Coronabot 1.0
+author: Raresh Nistor, Joel Freeman
+fontfamily: mathpazo
+numbersections: true
 geometry:
-- margin=0.8in
+ - margin=1in
 ---
 
-# Summary
+This document is to explain how to use CoronaBot to manage your Discord guild.
 
-Coronabot was originally written in Mar 2020 to supervise the new CoronaClub Discord server while everyone else was huddled up inside during the COVID-19 lockdown. Since the lockdown ended, it's used as a way to procrastinate (like writing the extra as hell document) instead of dealing with the post-lockdown work I have (god help me).
+# Introduction
 
-I've written up this guide as the project got a bit too big for me to maintain by myself and having a design document where things are written down is a good idea.
+CoronaBot is a Discord bot which assists the CoronaClub Discord guild, but since it's open source, anyone can use it. At the time of writing it has the following features:
 
-It's split it sections for people to more easily file sections important to them.
+* Storing courses, deadlines and lecture times;
+* Notifies users with certain roles of when these events occur;
+* Wishes members happy birthday;
+* Keeps a humorous message in the sidebar;
+* And more...
 
-* User Guide -- Command reference, user-visible functionality.
-* Server Administration -- Command reference, mod-visiable functionality.
-* Server Setup -- Setting up the server be compatible with the bot.
-* Host Machine Administration -- Keeping the bot online somewhere.
-* Developer Guide -- For hacking and maintaining the Coronabot codebase.
+# Guild Moderation
 
-# User Guide
+## Bot Setup
 
-This section discusses functionality written for the general users on the target Discord server.
+Discuss with the person administering the server to generate the right configuration file for CoronaBot. This file includes important parameters such as the roles and channels the bot is going to interact with.
 
+It is recommended (massively because the bot is horribly written with little type checks and unit testing) to allow it the Administrator permission. (It doesn't do what it doesn't advertise, feel free to read the source code to verify.)
 
-## Dashboard
+## Memory Model
 
-![The Coronabot Dashboard](dashboard.png){width=30%}
+CoronaBot keeps runtime information in memory as opposed to a database. This is to reduce code complexity and enable rollback in case of a mistake.
 
-The `#dashboard` channel contains glancable information for the day ahead. The information available on it will change from time to time.
+Each storage bank has a temporary "memory" state, and a more permanent "disk" state. The disk state is loaded into memory at start-up and then the storage can be "commited" to copy from memory to disk, or "reloaded" to copy from disk to memory.
 
-At the time of writing, it shows the following items:
+# Server Administation
 
-* Bot Information - General bot information
-* Today's Lectures - Lectures until the end of the day
-* Upcoming Deadlines - The next 5 deadlines for each course
-* Birthdays - The next 5 birthdays
+## Via Docker (Recommended)
 
+To set up Coronabot as a Docker container, you will only need a Linux server running Docker and Docker Compose.
 
-## Courses
+You can then create a container with:
 
-You will be sent a notification whenever there is an upcoming deadline or lecture. Enable notifications for the `#lectures` and `#deadlines` channels.
+```sh
+# TK: add cmd options for docker
+$ docker run -d --restart=always thegreatrazz/coronabot /data/config.json
+```
 
-Lectures for today are available in `#dashboard`.
+After to stop the bot, run:
 
-Ask the server administrators to enrol you in a course role, for example `comp` for COMP261.
+```sh
+$ docker stop $CONTAINER_ID
+```
 
-For a full listing of courses, deadlines and lectures, see `!courses.list`, `!dl.list` and `!lecture.list` commands.
+## Manual Setup
 
-With no arguments, only a summary is shown.
+To set up Coronabot manually, you will need a Linux server running Git, Node.js 14 or newer, and npm 6.14 or newer.
 
-> Deadline Summary \
-> > 420 total deadlines \
-> > 0 past deadlines \
-> > 420 future deadlines \
->
-> Usage: !dl.list [from] [to?] \
-> Print the deadlines from index from to index to exclusive.
+First download the bot software from Git:
 
-With one argument, it only shows that one entry, and with two argument, it shows a range of entries.
-
-
-## Birthdays
-
-Upcoming birthdays are available in `#dashboard`.
-
-You can request your birthday to be added by using the `!bday.request` command.
-
-
-## Commands
-
-In the `#bots` channel, you can interact with Discord bots, like Coronabot.
-
-The following are commands supported for use:
-
-* `!ping` -- Sends a message to the server and back.
-* `!courses.list` -- Lists all the courses.
-* `!dl.list` -- Lists all the deadlines.
-* `!lecture.list` -- Lists all the lectures.
-* `!bday.request` -- Requests a birthday to be added.
-
-
-# Server Administration
-
-This section discusses functionality written for administrators on the target Discord server.
-
-## Command Summary
-
-## Courses Module
-
-## Birthday Module
-
-## Dashboard Module
-
-## Activity Module (`motd`)
-
-# Server Setup
-
-## Recommended Channel Layout
-
-The following is the recommended channel layout for use with this bot. It is largely based on the channels currently available on CoronaClub.
-
-* `#annoucements` - General Discord server announcement channel
-* `#dashboard` - Dashboard channel
-* `#lecture` / `#deadlines` - Lecture/deadline warnings channels
-* `#birthdays` - Birthday wishes channel
-* `#bots` - Bot interaction channel
-
-
-### Permissions
-
-The simplest way to go about things is to allow the bot administrator rights, but if you'd much rather not, you can try limiting its influence to certain channels. (Have fun debugging it if it doesn't. I'm not gonna do that with the production env.)
-
-The following role permissions are required:
-
-* Read Text Channels & See Voice Channels
-* Send Messages
-* Manage Messages
-* Embed Links
-* Attach Files
-* Mention @everyone, @here and All Roles
-
-
-# Host Machine Administration
-
-This section discusses keeping the bot online and managing it on a host machine.
-
-
-## Installing Coronabot
-
-Coronabot depends on Node.js and npm to run. At the time of writing, Coronabot runs on **Node.js 14.4** and **npm 6.14.5**. Unless massive changes happen to Node.js, there shouldn't be any issues going forward.
-
-It's verified to work on Linux as a target platform, and Windows and macOS as development platforms.
-
-Once those are installed, you can retrieve the project from GitHub and install dependencies.
-
-```bash
+```sh
 $ git clone https://github.com/thegreatrazz/coronabot.git
+```
+
+The download and install the dependencies:
+
+```sh
 $ npm install
 ```
 
+After they're installed, you need to create a configuration file. More details in [Configuration File](#configuration-file).
 
-## Configuring Coronabot
+After the configuration file is created, you can go ahead and start the server by running:
 
-Most of the Coronabot configuration is done in `config.json`. An example `config.sample.json` is provided to model your own from, but it is likely severly out of date.
-
-But at the time of writing if follows the following form:
-
-```json
-{
-    /* path to data folder */
-    "dataFolder": "data",
-
-    /* discord connection settings */
-    "discord": {
-        "token": "## DISCORD TOKEN ##",
-    },
-
-    /* dashboard settings */
-    "dashboard": {
-        "channel": "## CHANNEL ID ##",      // channel where to put dashboard
-        "interval": 60000                   // time between dashboard updates
-    },
-
-    /* command processor settings */
-    "comproc": {
-        "prefix": "!",                      // command prefix
-        "channel": "690388544228818965",    // the channel to listen to for commands
-        "adminRoles": [                     // roles to regard as administrators
-            "## ROLE ID ##",
-            "## ROLE ID ##"
-        ],
-        "adminUsers": [                     // users to regard as administrators
-            "## USER ID ##",
-            "## USER ID ##",
-            "## USER ID ##"
-        ]
-    },
-
-    /* motd settings */
-    "motd": {
-        "interval": 1800000                 // time between motd updates
-    },
-
-    /* courses settings */
-    "courses": {
-        "defaultRole": "## ROLE ID ##",     // the role to regard as the default role
-        "channels": {
-            "deadlines": "## CHANNEL ID ##",    // deadline warning channel
-            "lectures": "## CHANNEL ID ##"      // lecture warning channel
-        }
-    },
-
-    /* birthday settings */
-    "birthday": {
-        "channel": "## CHANNEL ID ##"       // channel to announce birthdays on
-    }
-}
-```
-
-The following items were previously in the schema, but have since been removed or will be removed in a future version:
-
-* Initial Discord channel storage:
-  * `discord.announceChannel` $\to$ `birthday.channel`
-  * `discord.emailChannel` $\to$ no longer used
-  * `discord.botChannel` $\to$ `comproc.channel`
-
-* Legacy course notification system:
-  * `classTimes` $\to$ `courses` (different schema)
-  * `classTimes.channels` $\to$ `courses.channels` (different schema)
-  * `classTimes.channels.lectureTimes` $\to$ `courses.classes.lectures`
-  * `classTimes.courses` $\to$ replaced by on-demand data
-
-* Birthday:
-  * `birthday.file` -> to be replaced with on-demand data
-  * `birthday.refresh` -> no longer used
-
-* Email announcements
-  * `imap` -> no longer used
-  * `email` -> no longer used
-
-
-## Starting the Server
-
-After the `config.json` file was created, the bot can be run in standalone mode or daemon mode.
-
-
-### Standalone Mode
-
-```bash
-$ node bin/coronication.js config.json
-```
-
-Standalone mode calls the entry point and the bot starts normally, with the log being printed out to `stdout` as per any command-line programs.
-
-To stop the bot, press Ctrl-C.
-
-
-### Daemon Mode
-
-```bash
-# start Coronabot
+```sh
 $ npm start
+```
 
-# stop Coronabot
+And can be stopped by running:
+
+```sh
 $ npm stop
 ```
 
-Daemon mode runs the bot in the background as a UNIX daemon. Output is logged to the `log/` folder instead of `stdout`.
+To update the bot, reset unstaged changes and pull for the Git repo again.
 
-If any issues appear where you're not able to shut the server down with `npm stop`, you can manually do so by looking in `#dashboard` at Bot Information to get the Process ID and using `kill -9`.
-
-![Bot Information](dashboard-botinfo.png)
-
-```bash
-# as an example
-$ kill -9 192063
+```sh
+$ git reset HEAD --hard
+$ git pull
 ```
 
-# Developer Guide
+## Configuration File
 
-This section discusses the general layout of the project for modification and maintenance.
+## Additional Suggestions
 
+The CoronaBot software is always available from GitHub. But the data tied to your instance definetly isn't. For running this in a production environment, it's recommended to make a backup of the configuration file and data folder.
 
-# Appendix
+# Appendix {-}
 
-## Privacy and Logging Policy
+## Glossary {-}
 
-The bot only actively listens on the channels it's been expressly told to interact with.
+The reduce ambiguity, here are a bunch'a definitions.
 
-It only logs commands entered in the `#bots` channel as well as internal messages relating to ensuring everything works properly.
+| Name | Definition |
+|------|-------|
+| **Guild** | Discord Server. This term is from developer documentation. |
+| **Server** | The host computer running the CoronaBot software. |
+
+## Cron Syntax {-}
+
+Cron syntax is used for setting up events which commonly re-occur, such as lecture times. Cron strings take the form of a number or `*`, separated by spaces.
+
+>>> `20 16 20 4 *`
+
+Above is a recurring event on April (4) 20th at 16:20 on any day of the week. Numbers are sorted in the following order:
+
+* minutes
+* hours
+* day (of the month)
+* month
+* day (of the week)
+
+Each of the numbers above correspond with these values.
+
+| Number | Value          | Meaning                   |
+|-------:|----------------|---------------------------|
+| `20`   | minutes        | when minute is "20"       |
+| `16`   | hours          | when hour is "16"         |
+| `20`   | day (of month) | when day is "20"          |
+| `4`    | month          | when month is April ("4") |
+| `*`    | day (of week)  | ignored                   | 
+
+It can also be thought over as an if statement.
+
+```js
+if (now.minute == 20 && now.hours == 16 && now.dayOfMonth == 20 && now.month == 4) {
+    // notice the ommition of now.dayOfWeek
+```
+
+Another example, this time for a lecture.
+
+>>> `0 9 * * 1`
+
+The above cron string is a recurring event on every Monday at 9:00 AM.
+
+| Number | Value          | Meaning                   |
+|-------:|----------------|---------------------------|
+| `0`    | minutes        | when minute is "0"        |
+| `9`    | hours          | when hour is "9"          |
+| `*`    | day (of month) | ignored                   |
+| `*`    | month          | ignored                   |
+| `1`    | day (of week)  | when day is Monday ("1")  |
+
+If you're still having trouble understanding these, try the following websites:
+
+* https://crontab.guru/
+* https://bit.ly/2Z0X9MY

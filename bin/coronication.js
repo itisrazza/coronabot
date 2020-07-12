@@ -24,9 +24,6 @@ const Logger = require("../lib/log");
 const bot = {
     devMode: process.argv.includes("devmode"),
     log: new Logger(),
-
-    /** @type {Announcements} */
-    announcements: undefined,
     
     /** @type {Motd} */
     motd: undefined,
@@ -44,11 +41,10 @@ const bot = {
     courses: undefined
 };
 
-const Announcements = require("../lib/announcements");
 const Motd = require("../lib/motd");
 const Courses = require("../lib/courses");
 const CommandProcessor = require("../lib/comproc");
-const Birthdays = require("../lib/birthdays");
+// const Birthdays = require("../lib/birthdays");
 const Dashboard = require("../lib/dashboard");
 
 // Discord library events
@@ -74,20 +70,15 @@ client.on("ready", () => {
     // construct the modules
     if (!bot.devMode) bot.log.setClient(client);
     // bot.announcements = new Announcements(config, client, bot);
-    bot.motd = new Motd(config, client, bot);
-    bot.comProc = new CommandProcessor(config, client, bot);
     // bot.birthdays = new Birthdays(config, client, bot);
     bot.dashboard = new Dashboard(config, client, bot);
     bot.courses = new Courses(config, client, bot);
+    bot.comProc = new CommandProcessor(config, client, bot);
+    bot.motd = new Motd(config, client, bot);
 });
 
 // for future messages
 client.on("message", async msg => {
-    if (typeof bot.comProc === "undefined") {
-        msg.reply("Coronabot is taking commands yet. Try again later.");
-        return;
-    }
-
     if (msg.channel.id === config.comproc.channel) {
         bot.comProc.exec(msg);
     }
