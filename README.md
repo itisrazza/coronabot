@@ -1,5 +1,9 @@
 # CoronaBot
 
+> This project has been retired. It did its job back in 2020 when we got a flood of emails and had to jump into Zoom meetings non-stop, but we have since moved on.
+>
+> Thanks everyone for the feedback and good riddance.
+
 CoronaBot is the bot doing a few things on a Discord server a friend set up to provide useful information (and comedy relief) during the COVID-19 pandemic of 2020 and beyond.
 
 At the moment, it does the following things:
